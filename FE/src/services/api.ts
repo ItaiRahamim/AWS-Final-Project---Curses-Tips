@@ -2,7 +2,8 @@
 import axios from 'axios';
 import { Course } from '../data/courses';
 
-const API_BASE = '/api/tips';
+const API_URL = process.env.REACT_APP_API_URL;
+const API_BASE = `${API_URL ? API_URL.replace(/\/$/, '') : ''}/api/tips`;
 
 export type Tip = {
   id: number;
