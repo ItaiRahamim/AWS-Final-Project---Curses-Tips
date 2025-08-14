@@ -16,7 +16,8 @@ export default function CourseCard({ courseId, courseName }: Props) {
     const loadTips = async () => {
       try {
         const data = await fetchTips(courseId as any);
-        setTips(data);
+        // וודא שתמיד יש מערך, אפילו ריק
+        setTips(Array.isArray(data) ? data : []);
       } catch (err) {
         console.error('Failed to load tips', err);
       }

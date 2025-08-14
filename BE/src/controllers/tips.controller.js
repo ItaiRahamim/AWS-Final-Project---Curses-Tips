@@ -9,8 +9,12 @@ import {
 export const getAllTips = async (req, res) => {
   try {
     const courseName = req.params.courseName;
+    console.log('Getting tips for course:', courseName);
     const tips = await getTipsByCourse(courseName);
-    res.status(200).json(tips);
+    console.log('Tips found:', tips);
+    // וודא שאנחנו תמיד מחזירים מערך
+    const tipsArray = Array.isArray(tips) ? tips : [];
+    res.status(200).json(tipsArray);
   } catch (error) {
     console.error('Error getting tips:', error);
     res.status(500).json({ error: 'Internal server error' });
