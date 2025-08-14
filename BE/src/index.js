@@ -9,10 +9,9 @@ const app = express();
 const PORT = Number(process.env.API_PORT) || 3010;
 
 app.use(express.json());
-const corsOptions = {
-  origin: process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(',') : true,
-};
-app.use(cors(corsOptions));
+
+// בפיתוח - מאפשר הכל. בפרודקשן - יוגדר ע"י Terraform
+app.use(cors());
 
 app.use('/api/tips', router); 
 
