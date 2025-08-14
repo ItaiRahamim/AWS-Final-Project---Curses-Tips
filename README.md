@@ -57,14 +57,21 @@ cd your-repo
 
 #### Step 2: Configure Environment Variables
 
-Create a .env file in the project root directory containing the following:  
-DB_HOST=your-rds-endpoint.amazonaws.com  
-DB_USER=your-db-username  
-DB_PASSWORD=your-db-password  
-DB_NAME=your-db-name  
-PORT=3000  
+Create two `.env` files, one per service:
 
-VITE_API_URL=http://your-load-balancer-dns-name  
+- `BE/.env`
+  - `API_PORT=3010` (optional; ברירת מחדל 3010)
+  - `DB_HOST=your-rds-endpoint.amazonaws.com`
+  - `DB_USER=your-db-username`
+  - `DB_PASSWORD=your-db-password`
+  - `DB_NAME=your-db-name`
+  - `CORS_ORIGIN=http://localhost:3000` (אופציונלי; ניתן לספק רשימת מקורות מופרדת בפסיקים)
+
+- `FE/.env`
+  - `PORT=3000` (אופציונלי; ברירת מחדל 3000 בסביבת פיתוח)
+  - `REACT_APP_API_URL=https://your-load-balancer-dns-name` (נדרש בפרודקשן; בפיתוח אפשר להשאיר ריק ולהשתמש ב-proxy)
 
 #### Step 3: Install Dependencies
 #### Step 4: Run Locally (Optional)
+
+בפיתוח, הפרוקסי של הפרונט (`FE/src/setupProxy.js`) יכוון בקשות שמתחילות ב-`/api` ל-`http://localhost:${API_PORT||3010}` ללא צורך בהגדרת URL קשיח.
