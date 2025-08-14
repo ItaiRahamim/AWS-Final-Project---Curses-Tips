@@ -3,23 +3,23 @@ import { query } from '../db/rdsClient.js';
 
 // Get all tips for a specific course
 export const getTipsByCourse = async (courseName) => {
-  const text = 'SELECT id, content FROM tips WHERE course = $1';
-  const values = [courseName];
-  const result = await query(text, values);
-  return result.rows;
+  const sql = 'SELECT id, content FROM tips WHERE course = ?';
+  const rows = await query(sql, [courseName]);
+  return rows;
 };
 
 // Add a new tip for a course
 export const addTip = async (courseName, content) => {
-  const text = 'INSERT INTO tips (course, content) VALUES ($1, $2) RETURNING *';
-  const values = [courseName, content];
-  const result = await query(text, values);
-  return result.rows[0];
+  const insertSql = 'INSERT INTO tips (course, content) VALUES (?, ?)';
+  const result = await query(insertSql, [courseName, content]);
+  const insertedId = result.insertId;
+  const selectSql = 'SELECT id, content FROM tips WHERE id = ?';
+  const rows = await query(selectSql, [insertedId]);
+  return rows[0];
 };
 
 // Delete a tip by ID
 export const removeTip = async (tipId) => {
-  const text = 'DELETE FROM tips WHERE id = $1';
-  const values = [tipId];
-  await query(text, values);
+  const sql = 'DELETE FROM tips WHERE id = ?';
+  await query(sql, [tipId]);
 };
