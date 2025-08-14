@@ -69,7 +69,9 @@ Create two `.env` files, one per service:
 
 - `FE/.env`
   - `PORT=3000` (אופציונלי; ברירת מחדל 3000 בסביבת פיתוח)
-  - `REACT_APP_API_URL=https://your-load-balancer-dns-name` (נדרש בפרודקשן; בפיתוח אפשר להשאיר ריק ולהשתמש ב-proxy)
+  - `HOST=0.0.0.0` (כדי לאפשר גישה מבחוץ ב-EC2)
+  - `REACT_APP_API_URL=https://your-load-balancer-dns-name` (אופציונלי; אם לא מוגדר - `/api` יחסי)
+  - `REACT_APP_API_PORT=3010` (אופציונלי; שימושי כשאין כתובת ידועה מראש אך יודעים את הפורט של ה-API באותו Host)
 
 #### Step 3: Install Dependencies
 #### Step 4: Run Locally (Optional)
