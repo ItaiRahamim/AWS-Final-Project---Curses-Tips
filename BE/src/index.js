@@ -8,8 +8,13 @@ dotenv.config();
 const app = express();
 const PORT = Number(process.env.API_PORT) || 3010;
 
+// אפשר CORS מכל מקור
+app.use(cors({
+  origin: true,
+  credentials: true
+}));
+
 app.use(express.json());
-app.use(cors());
 app.use('/api/tips', router); 
 
 app.listen(PORT, () => {
