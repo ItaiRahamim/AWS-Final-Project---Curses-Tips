@@ -2,8 +2,20 @@
 import axios from 'axios';
 import { Course } from '../data/courses';
 
-// בפיתוח ובפרודקשן - תמיד נשתמש בנתיב יחסי
-const API_BASE = '/api/tips';
+// אם יש כתובת API מפורשת - השתמש בה
+// אחרת, השתמש באותו host אבל על פורט 3010
+const getApiBase = () => {
+  const apiUrl = process.env.REACT_APP_API_URL;
+  if (apiUrl) {
+    return `${apiUrl.replace(/\/$/, '')}/api/tips`;
+  }
+  
+  // אם אין URL מפורש, השתמש באותו host על פורט 3010
+  const { protocol, hostname } = window.location;
+  return `${protocol}//${hostname}:3010/api/tips`;
+};
+
+const API_BASE = getApiBase();
 
 export type Tip = {
   id: number;
