@@ -9,6 +9,5 @@ export DB_NAME=colman
 
 # Frontend (CRA dev server)
 export PORT=3000
-export REACT_APP_API_PORT=3010
 
 echo "Environment loaded: API_PORT=${API_PORT}, PORT=${PORT}"

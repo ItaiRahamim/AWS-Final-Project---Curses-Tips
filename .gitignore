@@ -9,3 +9,4 @@ BE/.env
 BE/dist/
 
 venv/
+envs.sh

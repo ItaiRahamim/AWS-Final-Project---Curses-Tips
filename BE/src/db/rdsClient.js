@@ -3,6 +3,13 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+console.log('Connecting to DB with params:', {
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  database: process.env.DB_NAME,
+  // לא מדפיסים סיסמה
+});
+
 const pool = mysql.createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -10,10 +17,22 @@ const pool = mysql.createPool({
   database: process.env.DB_NAME,
   waitForConnections: true,
   connectionLimit: 10,
-  queueLimit: 0,
+  queueLimit: 0
 });
 
+// בדיקת חיבור בהתחלה
+pool.query('SELECT 1')
+  .then(() => console.log('Successfully connected to DB'))
+  .catch(err => console.error('Failed to connect to DB:', err));
+
 export const query = async (sql, params) => {
-  const [rows] = await pool.execute(sql, params);
-  return rows;
+  try {
+    console.log('Executing query:', sql, 'with params:', params);
+    const [rows] = await pool.execute(sql, params);
+    console.log('Query result:', rows);
+    return rows;
+  } catch (error) {
+    console.error('Database error:', error);
+    throw error;
+  }
 };
